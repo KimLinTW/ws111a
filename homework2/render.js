@@ -67,38 +67,62 @@ export function list(posts) {
     let list = []
     for (let post of posts) {
         list.push(`
-    <li>
-      <h2>${ post.title }</h2>
-      <p><a href="/post/${post.id}">詳細資訊</a></p>
-    </li>
-    `)
+            <li>
+              <h2>${ post.title } (${ post.time })</h2>
+              <p><a href="/post/${post.id}">查看詳細資訊</a></p>
+              <p><a href="/del/${post.id}">刪除資料</a></p>
+            </li>
+        `)
     }
     let content = `
-  <h1>行事曆系統</h1>
-  <p>你有<strong>${posts.length}</strong>筆記錄</p>
-  <p><a href="/post/new">新增項目</a></p>
-  <ul id="posts">
-    ${list.join('\n')}
-  </ul>
-  `
+      <h1>行事曆系統</h1>
+      <p>你有<strong>${posts.length}</strong>筆記錄</p>
+      <p><a href="/post/new">新增項目</a></p>
+      <ul id="posts">  ${list.join('\n')} </ul>
+    `
     return layout('Posts', content)
 }
 
 export function newPost() {
-    return layout('New Post0', `
-  <h1>New Post1</h1>
-  <p>Create a new post.</p>
-  <form action="/post" method="post">
-    <p><input type="text" placeholder="Title" name="title"></p>
-    <p><textarea placeholder="Contents" name="body"></textarea></p>
-    <p><input type="submit" value="Create"></p>
-  </form>
+    return layout('New Post', `
+      <h1>新增項目</h1>
+      
+      <form action="/post" method="post">
+
+      <input type="date" id="start" name="time" value="2022-10-01" min="2022-09-01" max="2023-01-31">
+      &nbsp設定日期
+      </input>
+
+        <p><input type="text" placeholder="標題" name="title" minlength="1"></p>
+        <p><textarea placeholder="內容" name="body" minlength="1"></textarea></p>
+        <p><input type="submit" value="建立"></p>
+      </form>
   `)
 }
 
 export function show(post) {
     return layout(post.title, `
+    <p><a href="/">上一頁</a></p>
     <h1>${post.title}</h1>
     <pre>${post.body}</pre>
+    <p><a href="/post/update/${post.id}">修改資料</a></p>
+    <p><a href="/del/${post.id}">刪除資料</a></p>
+  `)
+}
+
+export function update(post) {
+    return layout('修改post', `
+      <h1>修改項目</h1>
+      
+      <form action="/post" method="post" id="update">
+
+      <input type="date" id="start" name="time" value="${post.time}" min="2022-09-01" max="2023-01-31">
+      &nbsp修改日期
+      </input>
+
+        <p><input type="text" placeholder="標題" name="title" value="${post.title}"></p>
+        <p><textarea placeholder="內容" name="body">${post.body}</textarea></p>
+        <p><input type="submit" value="更新"></p>
+      </form>
   `)
 }
