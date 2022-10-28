@@ -105,24 +105,6 @@ export function show(post) {
     <p><a href="/">上一頁</a></p>
     <h1>${post.title}</h1>
     <pre>${post.body}</pre>
-    <p><a href="/post/update/${post.id}">修改資料</a></p>
     <p><a href="/del/${post.id}">刪除資料</a></p>
-  `)
-}
-
-export function update(post) {
-    return layout('修改post', `
-      <h1>修改項目</h1>
-      
-      <form action="/post" method="post" id="update">
-
-      <input type="date" id="start" name="time" value="${post.time}" min="2022-09-01" max="2023-01-31">
-      &nbsp修改日期
-      </input>
-
-        <p><input type="text" placeholder="標題" name="title" value="${post.title}"></p>
-        <p><textarea placeholder="內容" name="body">${post.body}</textarea></p>
-        <p><input type="submit" value="更新"></p>
-      </form>
   `)
 }
