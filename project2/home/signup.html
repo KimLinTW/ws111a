@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://kit.fontawesome.com/5b08644e8c.js" crossorigin="anonymous"></script>
+    </head>
+    <script src="./yes.js"></script>
+    <!-- <script src="../callPy.js"></script> -->
+    <body style="background-color:rgb(252,240,228);">
+        <br><br><br><br><br><br><br><br>
+        <div id="" class="card-layout">
+            <h2>Sign up</h2>
+            <p><i class="fa-solid fa-user-astronaut"></i><input id="name" type="text"  placeholder="Your name"/></p>
+            <p><i class="fa-solid fa-globe"></i><input id="mail" type="text" placeholder="Your email"/></p>
+            <p><i class="fa-solid fa-shuttle-space"></i><input id="pas" type="password" placeholder="Password"/></p>
+            <p><i class="fa-solid fa-meteor"></i><input type="password" placeholder="Retype your password again"/></p>
+            <br><p><input type="checkbox"> I agree all statements in <a href="#">Terms of service</a></p>
+            <br><br>
+
+            <button onclick="signup()" >Submit</button>
+            <pre id = 'ss'>0</pre>
+            <pre id = 'a'>0</pre>
+            <pre id = 'b'>0</pre>
+            <pre id = 'd'>0</pre>
+        </div>
+    </body>
+    <script>
+        async function signup() {
+            // sign up
+            name = document.getElementById('name').value
+            pas = document.getElementById('pas').value
+            mail = document.getElementById('mail').value
+
+            document.getElementById('a').innerText = "isSign."+name+"."+pas+"."+mail
+            let result="raw"
+
+            // let testdata = "isSign.Kim.abc123.linkim0914@gmail.com"
+            document.getElementById('ss').innerText = "waiting..."
+            // result = await input(testdata);
+            
+            // document.getElementById('a').innerText = tst()
+            document.getElementById('ss').innerText = "註冊成功"
+
+            let indata = "isSign."+name+"."+pas+"."+mail
+            let r = await window.fetch(`/test/${indata}`)
+            let obj = await r.json() 
+            result = await JSON.stringify(obj, null, 2)
+
+            if("OK" in result){
+                document.getElementById('ss').innerText = "註冊成功"
+            }else{
+                document.getElementById('ss').innerText = "此帳號已經存在!"
+            }
+        }
+    </script>
+    
+</html>

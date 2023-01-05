@@ -1,0 +1,38 @@
+body { font-family:"Calluna";}
+
+h2 { font-size: 36px;}
+
+i{
+    font-size: 25px;
+    padding:10px;
+}
+
+button { padding:8px 14px;
+            background-color:DeepSkyBlue;
+            border:0px black solid;
+            color: white;
+            border-radius: 5px;}
+
+div { width:100%;
+        text-align:center;}
+
+input[type=text], input[type=password] {
+    padding:8px 14px;
+    width:200px;
+    border-radius:5px;
+    border: 1px #cccccc solid;}
+
+a { color:DodgerBlue;
+    text-decoration: none;}
+
+.card-layout { width: 352px;
+                box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+                padding: 24px;
+                border-radius: 8px;
+                margin: auto;
+                background: #fff;}
+
+button:hover {
+    background-color: DodgerBlue;
+    cursor: pointer;
+}

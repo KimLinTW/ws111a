@@ -7,10 +7,9 @@ import { DB } from "https://deno.land/x/sqlite/mod.ts";
 const db = new DB("blog.db");
 db.query(`CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, time TEXT, body TEXT)`);
 
-const posts = [
-    //{ id: 0, title: '上課', body: '網站設計課' },
-    //{ id: 1, title: '作筆記', body: '網站設計筆記' }
-];
+// init db
+db.query(`INSERT OR IGNORE INTO posts (id, title, time, body) VALUES (0,'上課','2022-10-01','網站設計課')`)
+db.query(`INSERT OR IGNORE INTO posts (id, title, time, body) VALUES (1,'作筆記','2022-10-02','網站設計筆記')`)
 
 const router = new Router();
 
