@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://kit.fontawesome.com/5b08644e8c.js" crossorigin="anonymous"></script>
+    </head>
+    <script src="../callPy.js"></script>
+    <body style="background-color:rgb(252,240,228);">
+        <br><br><br><br><br><br><br><br>
+        <div id="" class="card-layout">
+            <h2>Log in</h2>
+            <p><i class="fa-solid fa-user-astronaut"></i><input id = "login_n" type="text" placeholder="Your name"/></p>
+            <p><i class="fa-solid fa-shuttle-space"></i><input id="login_p" type="password" placeholder="Password"/></p>
+            <br><br>
+            <button style="background-color:#f0b446;" onclick="login()" >Submit</button>
+            <pre id="s"></pre>
+            <pre id="s2"></pre>
+            <pre id="s3"></pre>
+        </div>
+    </body>
+    <script>
+        async function login() {
+            // sign up
+            name = document.getElementById('login_n').value
+            pas = document.getElementById('login_p').value
+
+            let result="raw"
+            let indata = "login."+name+"."+pas
+
+            
+            document.getElementById('s').innerText = "waiting..."
+            let tmp = Boolean(name) && Boolean(pas) 
+            if (!tmp) {
+                document.getElementById('s').innerText = "資料不完整!"
+                return
+            } 
+
+            let r = await window.fetch(`/test/${indata}`)
+            let obj = await r.json()
+            result = await JSON.stringify( obj["send"])
+            // result = await JSON.stringify(obj)
+            // document.getElementById('s2').innerText = result
+            // document.getElementById('s2').innerText = result[1]+result[2]
+
+            if("OK" == result[1]+result[2]){
+                document.getElementById('s').innerText = "登入成功"
+                document.getElementById('s').innerHTML = '<a href="./index.html" >登入成功(回首頁)</a>'
+                let r2 = await window.fetch(`/log/${name}`)
+                
+            }else{
+                document.getElementById('s').innerText = "帳號或密碼錯誤!"
+            }
+            tst()
+
+        }
+
+
+        async function tst(){
+            document.getElementById("tt").innerText = "1"
+            let r = await window.fetch(`/log_get/any`)
+            let obj = await r.json()
+            let result = await JSON.stringify( obj["send"])
+            if (result[2] == '"'){
+                document.getElementById("tt").innerText = "未登入"
+            }else{
+                document.getElementById("tt").innerText = "您好，"+result
+            }
+
+            //document.getElementById("tt").innerText = result[1] == '"'
+            //document.getElementById("tt").innerText = result
+
+        }
+        async function log_out(){
+            let r = await window.fetch(`/log_get/out`)
+            tst()
+        }
+    </script>
+</html>

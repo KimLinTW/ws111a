@@ -32,23 +32,35 @@
             pas = document.getElementById('pas').value
             mail = document.getElementById('mail').value
 
-            document.getElementById('ss').innerText = "isSign."+name+"."+pas+"."+mail
             let result="raw"
+            let indata = "isSign."+name+"."+pas+"."+mail
 
             // let testdata = "isSign.Kim.abc123.linkim0914@gmail.com"
             document.getElementById('ss').innerText = "waiting..."
             // result = await input(testdata);
             
             // document.getElementById('a').innerText = tst()
-            document.getElementById('ss').innerText = "註冊成功"
+            // document.getElementById('ss').innerText = "註冊成功"
+            let tmp = Boolean(name) && Boolean(pas) && Boolean(mail)
+            if (!tmp) {
+                document.getElementById('ss').innerText = "資料不完整!"
+                return
+            } 
 
-            let indata = "isSign."+name+"."+pas+"."+mail
             let r = await window.fetch(`/test/${indata}`)
             let obj = await r.json() 
-            result = await JSON.stringify(obj, null, 2)
+            result = await JSON.stringify( obj["send"])
+            document.getElementById('ss').innerText = result
+            
+            // document.getElementById('a').innerText = result[1]+result[2]
+            // document.getElementById('b').innerText = result[1]+result[2]
+             
 
-            if("OK" in result){
-                document.getElementById('ss').innerText = "註冊成功"
+
+            if("OK" == result[1]+result[2]){
+                document.getElementById('ss').innerText = "註冊成功!"
+                document.getElementById('ss').innerHTML = '<a href="./index.html" >登入成功(回首頁)</a>'
+                let r2 = await window.fetch(`/log/${name}`)
             }else{
                 document.getElementById('ss').innerText = "此帳號已經存在!"
             }

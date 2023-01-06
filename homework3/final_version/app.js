@@ -103,14 +103,6 @@ async function update(ctx) {
     // ctx.response.redirect("/update/"+string1);
 }
 async function update_table(ctx) {
-
-
-
-    // await send(ctx, ctx.request.url.pathname, {
-    //     root: `${Deno.cwd()}/`,
-    //     index: "index.html",
-    // })
-
     
     let content = await document.getElementById('title').value
     let r = await window.fetch(`/update/content`)

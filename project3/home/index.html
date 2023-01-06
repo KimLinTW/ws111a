@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <title>home</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body onload="tst()">
+
+    
+    <button ><a href="./signup.html" style="color:rgb(0, 0, 0);"><b>Sign up</b></a></button>
+    <button ><a href="./login.html" style="color:rgb(0, 0, 0);"><b>log in</b></a></button>
+    <button onclick="log_out()"><b>log out<b></button>
+    <button ><a href="./create.html" style="color:rgb(0, 0, 0);"><b>Post</b></a></button>
+
+    <pre id = "tt"></pre>
+    <pre id = "sss">1</pre>
+    <pre id = "s">1</pre>
+
+
+    <!-- <div>
+        <textarea id="input" cols="80" rows="8" placeholder="請輸入 SQL 指令(ex: select * from users)"></textarea>
+    </div>
+    <script src="./main.js"></script>
+
+    <div>
+        <button id="submit" onclick="sqlRun()">執行</button>
+    </div>
+    <b>執行結果：</b>
+    <pre id="result"></pre> -->
+
+
+    <!-- <div class="article">
+    <h3 id="userName">使用者名稱</h3>
+    <p id="post_inner">內文</p> -->
+    <!-- <img src="image.jpg" alt="圖片"> -->
+    <!-- <div class="article-actions">
+        <button>Like</button>
+        <button>Dislike</button>
+    </div> -->
+    <p>標籤：標籤1、標籤2、標籤3</p>
+    </div>
+<form>
+  <label for="search-articles">搜尋文章：</label>
+  <input type="text" id="search-articles" name="search-articles">
+  <button type="submit">搜尋</button>
+</form>
+<ul>
+  <li><a href="#">分類1</a></li>
+  <li><a href="#">分類2</a></li>
+  <li><a href="#">分類3</a></li>
+</ul>
+
+  <!-- <button type="submit" onclick="tst()">tt</button> -->
+<script>
+    async function tst(){
+        document.getElementById("tt").innerText = "1"
+        let r = await window.fetch(`/log_get/any`)
+        let obj = await r.json()
+        let result = await JSON.stringify( obj["send"])
+        if (result[2] == '"'){
+            document.getElementById("tt").innerText = "未登入"
+        }else{
+            document.getElementById("tt").innerText = "您好，"+result
+        }
+
+        //document.getElementById("tt").innerText = result[1] == '"'
+        //document.getElementById("tt").innerText = result
+        r = await window.fetch(`/gpost/abc`)
+        obj = await r.json()
+
+        let t = result[0]
+        let c = result[1]
+        let i = result[2]
+        let a = result[3]
+        t = await JSON.stringify( obj["t"])
+        c = await JSON.stringify( obj["c"])
+        i = await JSON.stringify( obj["i"])
+        a = await JSON.stringify( obj["a"])
+        document.getElementById("s").innerText = i.slice(1,-1)
+        
+
+            let layout = `
+                <div class="article">
+                <h3 id="userName">${a}</h3>
+                <h3 id="title">${t}</h3>
+                <p id="post_inner">${c}</p> 
+                <img src=${i.slice(1,-1)} alt="圖片">
+                <div class="article-actions">
+                </div>
+
+            
+            `
+        document.getElementById("sss").innerHTML = layout
+
+
+    }
+    async function log_out(){
+        let r = await window.fetch(`/log_get/out`)
+        tst()
+    }
+</script>
+
+
+</body>
+
+</html>
