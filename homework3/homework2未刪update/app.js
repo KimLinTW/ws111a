@@ -18,8 +18,9 @@ router.get('/', list)
     .get('/del/:id', del)
     .get('/post/:id', show)
     .get('/post/update/:id', update)
+    .get('/update/:any',tmp)
     .post('/post', create)
-    .post('/update/:id', update_table);
+    .get('/change/:id2', update_table);
 
 const app = new Application();
 app.use(router.routes());
@@ -72,23 +73,24 @@ async function update(ctx) {
     ctx.response.body = await render.update(posts[0]);
 }
 async function update_table(ctx) {
-    if (body.type === "form") {
-        console.log("update table **********")
-        const body = ctx.request.body()
-        const pairs = await body.value
-        const post = {}
-
-        for (const [key, value] of pairs) {
-            post[key] = value
-        }
-
-        console.log('post=', post)
-            // db.query(`UPDATE posts SET title = '${ ctx.params.title }' WHERE id = '${ ctx.params.id }'`);
-        db.query(`UPDATE posts SET title='${ ctx.params.title }', time='${ ctx.params.time }', body='${ ctx.params.body }' WHERE id=${ ctx.params.id }`);
-        ctx.response.redirect('/');
-    }
+    console.log(76)
+    let inp = ctx.params['id2']
+    console.log(inp)
+    if (inp.split('.')) 
+    inp = inp.split('.')
+    let time = inp[0]
+    let title = inp[1]
+    let content = inp[2]
+    let id = inp[3]
+    db.query(`UPDATE posts SET title='${title}', time='${time}', body='${content}' WHERE id=${id}`);
+    ctx.response.redirect('/');
 }
 
+async function tmp(ctx){
+    let posts = query(`SELECT id, title, time, body FROM posts`);
+    ctx.response.body = await render.list(posts);
+    ctx.response.redirect('/');
+}
 
 async function create(ctx) {
 

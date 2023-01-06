@@ -119,10 +119,19 @@ export function update(post) {
       <input type="date" id="start" name="time" value="${post.time}" min="2022-09-01" max="2023-01-31">
       &nbsp修改日期
       </input>
-
-        <p><input type="text" placeholder="標題" name="title" value="${post.title}"></p>
-        <p><textarea placeholder="內容" name="body">${post.body}</textarea></p>
-        <p><input type="submit" value="更新"></p>
+        <p><input type="text" placeholder="標題" id="title" value="${post.title}"></p>
+        <p><textarea placeholder="內容" id="body">${post.body}</textarea></p>
+        <button onclick="run()">更新</button>
       </form>
+      <script>
+          async function run(){
+              let a=document.getElementById('start').value
+              let b=document.getElementById("title").value
+              let c=document.getElementById("body").value
+              let tmp ="/change/"+ a+"."+b+"."+c+'.'+${post.id}
+              let r = await window.fetch(tmp)
+          }
+      </script>
   `)
 }
+
